@@ -1,6 +1,10 @@
 const mysql = require('mysql'); //For database interactions
+const crypto = require('crypto'); //For hashing passwords and all cryptogaphic stuff
 const express = require('express'); //For serving the web app
 const bodyParser = require('body-parser'); //For parsing the post request data
+
+const register = require('./users/register'); //The register function
+const login = require('./users/login'); //The login function
 
 const app = express(); //Instanciate the express app
 
@@ -33,9 +37,14 @@ app.get('/', (req, res) => {
 
 app.post('/api/register', (req, res) => {
 //When a form is posted at http://localhost:3000/api/register
-    console.log(req.body);
-    res.send('post request received');
+    register(req, res, database);
 });
+
+app.post('/api/login', (req, res) => {
+//When a form is posted at http://localhost:3000/api/login
+    login(req, res, database);
+});
+
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
