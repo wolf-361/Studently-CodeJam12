@@ -10,8 +10,33 @@ const login = require('./users/login'); //The login function
 const app = express(); //Instanciate the express app
 app.set('view engine', 'ejs');
 
+// Afficher les pages selon les liens du menu
 app.get('/', (req, res) => {
     res.render('test');
+});
+
+app.get('/todolist', (req, res) => {
+    res.render('todolist');
+});
+
+app.get('calendar', (req, res) => {
+    res.render('calendar');
+});
+
+app.get('chat', (req, res) => {
+    res.render('chat');
+});
+
+app.get('meditation', (req, res) => {
+    res.render('meditation');
+});
+
+app.get('/register', (req, res) => {
+    res.render('register');
+});
+
+app.get('/login', (req, res) => {
+    res.render('login');
 });
 
 let database = mysql.createConnection({
