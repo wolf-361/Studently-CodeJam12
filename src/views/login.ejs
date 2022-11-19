@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('partials/head'); %>
+</head>
+<body class="container justify-content-center p-2">
+    <header>
+        <%- include('partials/header'); %>
+    </header>
+    <div class="container">
+        <div
+        <section class="form_password_email">
+            <p>Sign in</p>
+            <form>
+                <label for="username">Enter your username:</label>
+                <br>
+                <input type="text" name="username" required>
+                <br><br>
+                <label for="password">Enter your password:</label>
+                <br>
+                <input type="password" name="password" required>
+                <br><br>
+                <input type="submit" value="Submit">
+                <input type="reset" value="Reset">
+            </form>
+        </section>
+    </div>
+    <footer>
+        <%- include('partials/footer'); %>
+    </footer>
+</body>
+
+</html>

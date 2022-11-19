@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 
 // Afficher les pages selon les liens du menu
 app.get('/', (req, res) => {
-    res.render('test');
+    res.render('main');
 });
 
 app.get('/todolist', (req, res) => {
