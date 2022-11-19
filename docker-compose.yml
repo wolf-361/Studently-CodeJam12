@@ -14,8 +14,6 @@ services:
       - "3000:3000"
     networks:
       - codejam-network
-    volumes:
-      - "./src:/app"
     links:
       - database
   
