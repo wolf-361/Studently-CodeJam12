@@ -11,10 +11,11 @@
       { href: '/', id: 'home', name: 'Home' },
       { href: '/todolist', id: 'todolist', name: 'Todo List' },
       { href: '/calendar', id: 'calendar', name: 'Calendar' },
-      { href: '/chat', id: 'chat', name: 'Chat' }
+      { href: '/chat', id: 'chat', name: 'Chat' },
+      { href: '/meditation', id: 'meditation', name: 'Meditation' }
     ]; %>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
+    <div class="collapse navbar-collapse" id="navbar_index">
       <ul class="navbar-nav me-auto">
         <!-- Itere sur les options du menu -->
         <% menuOptions.forEach(function (option) { %>
@@ -25,7 +26,7 @@
       </ul>
     </div>
     <div class="align-items-lg-end">
-      <div class="collapse navbar-collapse" id="navbar_index">
+      <div class="collapse navbar-collapse" id="navbar_user">
           <ul class="navbar-nav mt-2">
               <li class="nav-item "><a class="nav-link"
                   href="/login">Login</a></li>
