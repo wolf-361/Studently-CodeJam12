@@ -18,6 +18,7 @@ services:
       - database
     depends_on:
       - database
+    restart: on-failure
   
   database:
     image: mariadb:10.2
