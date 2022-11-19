@@ -1,0 +1,33 @@
+version: "3"
+
+networks:
+  codejam-network:
+    driver: bridge
+
+services:
+  nodejs:
+    image: front-back
+    build:
+      context: ./src
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - codejam-network
+    volumes:
+      - "./src:/app"
+    links:
+      - database
+  
+  database:
+    image: mariadb:10.2
+    environment:
+      MYSQL_ROOT_PASSWORD: codejam
+      MYSQL_DATABASE: codejam
+      MYSQL_USER: codejam
+      MYSQL_PASSWORD: codejam
+    networks: 
+      - codejam-network
+    restart: on-failure
+    volumes:
+      - ./database:/var/lib/mysql

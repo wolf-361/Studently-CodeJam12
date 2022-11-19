@@ -1,0 +1,15 @@
+FROM node:latest
+
+# Create app directory
+WORKDIR /app
+
+# Install app dependencies
+COPY package*.json ./
+RUN yarn install && yarn global add nodemon
+
+# Bundle app source
+COPY . .
+
+EXPOSE 3000
+
+CMD [ "nodemon", "index.js" ]
