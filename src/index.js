@@ -12,6 +12,8 @@ const {addTodo, getTodos, markDone} = require('./todos'); //Todos related functi
 const app = express(); //Instanciate the express app
 app.set('view engine', 'ejs');
 
+let jwt_secret_key = "dxN3ucxNFmaPkTLdaH6GmFjip5#&X@1E8nRox*7DFHqIN%G#$b3V#osnBMwpi&s7oa9n3RfU#YWbTBmopl@V74ujhjt2Qvl9u8Mg&QAhQ3#s9dyauYjmtdFdOwmFa1bcX#*s3rvh19yFtW6xkeUe2X"
+
 // Afficher les pages selon les liens du menu
 app.get('/', (req, res) => {
     res.render('main');
@@ -63,19 +65,15 @@ database.connect(function (err) {
 app.use(bodyParser.json({ extended: true }));
 //Allow to parse json sended from the frontend
 
-app.get('/', (req, res) => {
-//When the user access the root of the website (http://localhost:3000/)
-    res.send('Quentin vas pas se tuer, Yeah !');
-});
 
 app.post('/api/register', (req, res) => {
 //When a form is posted at http://localhost:3000/api/register
-    register(req, res, database);
+    register(req, res, database, jwt_secret_key);
 });
 
 app.post('/api/login', (req, res) => {
 //When a form is posted at http://localhost:3000/api/login
-    login(req, res, database);
+    login(req, res, database, jwt_secret_key);
 });
 
 app.post('/api/event/new', (req, res) => {

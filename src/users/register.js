@@ -1,6 +1,7 @@
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
-function register(req, res, database) {
+function register(req, res, database, jwt_secret_key) {
 //This function is called when a form is posted at http://localhost:3000/api/register
 //It takes the request, the response and the database connection as parameters
 
@@ -32,7 +33,12 @@ function register(req, res, database) {
                 return;
             }
 
-            res.status(200).send('User registered');
+            const token = jwt.sign({"id": results.insertId}, jwt_secret_key, {
+                algorithm: "HS256",
+                expiresIn: 4800,
+            });
+
+            res.status(200).send(token);
         });
     });
 }
