@@ -1,31 +1,57 @@
-const mysql = require('mysql');
-const express = require('express');
+const mysql = require('mysql'); //For database interactions
+const crypto = require('crypto'); //For hashing passwords and all cryptogaphic stuff
+const express = require('express'); //For serving the web app
+const bodyParser = require('body-parser'); //For parsing the post request data
 
-const app = express();
+const register = require('./users/register'); //The register function
+const login = require('./users/login'); //The login function
 
+
+const app = express(); //Instanciate the express app
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
     res.render('test');
 });
 
-let connection = mysql.createConnection({
+let database = mysql.createConnection({
     host: 'database',
     user: 'codejam',
     password: 'codejam',
     database: 'codejam'
 });
+//Define database credentials
 
-connection.connect(function(err) {
-    if (err) {
-      console.error('An error occured while trying to connect to the database: ' + err.message);
+database.connect(function (err) {
+//Connect to the database with credentials defined above
+
+    if(err) {
+        console.error('An error occured while trying to connect to the database: ' + err.message);
+        process.exit(1);
     }
-  
+
     console.log('Connected to the database.');
-  });
+});
+
+app.use(bodyParser.json({ extended: true }));
+//Allow to parse json sended from the frontend
+
+app.get('/', (req, res) => {
+//When the user access the root of the website (http://localhost:3000/)
+    res.send('Quentin vas pas se tuer, Yeah !');
+});
+
+app.post('/api/register', (req, res) => {
+//When a form is posted at http://localhost:3000/api/register
+    register(req, res, database);
+});
+
+app.post('/api/login', (req, res) => {
+//When a form is posted at http://localhost:3000/api/login
+    login(req, res, database);
+});
 
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
-
