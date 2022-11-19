@@ -3,8 +3,10 @@ const express = require('express');
 
 const app = express();
 
+app.set('view engine', 'ejs');
+
 app.get('/', (req, res) => {
-    res.send('Quentin vas pas se tuer, Yeah !');
+    res.render('test');
 });
 
 let connection = mysql.createConnection({
