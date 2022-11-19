@@ -3,17 +3,27 @@
 <head>
 	<%- include('partials/head'); %>
 </head>
-<body class="container">
+<body class="container p-2 d-flex flex-column vh-100">
     <header>
         <%- include('partials/header'); %>
     </header>
-    <main>
-        <div class="jumbotron">
-            <p>Hello world</p>
+    <main role="main" class="container vh-100">
+        <div class="d-flex flex-row justify-content-center p-5 vertical-center">
+            <div class="border border-secondary rounded justify-content-center p-2">
+                <p>Clock to come</p>
+            </div>        
         </div>
     </main>
-	<footer>
+	<footer class="footer">
         <%- include('partials/footer'); %>
     </footer>
+    <style>
+        .vertical-center {
+            min-height: 80%;  /* Fallback for browsers do NOT support vh unit */
+            min-height: 80vh; /* These two lines are counted as one :-)       */
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </body>
 </html>
