@@ -23,3 +23,21 @@ docker exec -it codejam_database_1 mysql -p
 ```
 
 Then provide the database password
+
+## How to setup the database ?
+
+Use the prevoius command to get the project running and then access the database. Then type "USE codejam;" to use the codejam database.
+
+Then copy paste the content of the file "database.sql" into the terminal to create the tables.
+
+You can check by typing "SHOW TABLES;" and you should see the tables like that :
+
+```
++-------------------+
+| Tables_in_codejam |
++-------------------+
+| Account           |
+| Event             |
+| Todo              |
++-------------------+
+```

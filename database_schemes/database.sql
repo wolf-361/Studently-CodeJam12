@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS Account (
+    id INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS Todo (
+    id INT NOT NULL AUTO_INCREMENT,
+    account INT NOT NULL,
+    text VARCHAR(255) NOT NULL,
+    done BOOLEAN NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (account) REFERENCES Account(id)
+);
+
+CREATE TABLE IF NOT EXISTS Event (
+    id INT NOT NULL AUTO_INCREMENT,
+    account INT NOT NULL,
+    beginning DATETIME NOT NULL,
+    ending DATETIME NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (account) REFERENCES Account(id)
+);

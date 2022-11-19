@@ -32,3 +32,4 @@ services:
     restart: on-failure
     volumes:
       - ./database:/var/lib/mysql
+      - ./database_schemes/database.sql:/docker-entrypoint-initdb.d/database.sql
