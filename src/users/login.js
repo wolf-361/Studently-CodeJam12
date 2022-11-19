@@ -1,6 +1,7 @@
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
-function login(req, res, database) {
+function login(req, res, database, jwt_secret_key) {
 //This function is called when a form is posted at http://localhost:3000/api/login
 //It takes the request, the response and the database connection as parameters
 
@@ -28,7 +29,12 @@ function login(req, res, database) {
             return;
         }
 
-        res.status(200).send('User logged in');
+        const token = jwt.sign({"id": results[0].id}, jwt_secret_key, {
+            algorithm: "HS256",
+            expiresIn: 4800,
+        });
+
+        res.status(200).send(token);
     });
 }
 

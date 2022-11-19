@@ -16,14 +16,14 @@
                         <h1>Sign in</h1>
                     </div>
                     <br><br>
-                    <form>
+                    <form id="login-form">
                         <div class="form-group">
                             <label for="username">Enter your username:</label>
-                            <input class="form-control" type="text" name="username" required>
+                            <input class="form-control" type="text" id="username" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Enter your password:</label>
-                            <input class="form-control" type="password" name="password" required>
+                            <input class="form-control" type="password" id="password" required>
                         </div>
                         <br><br>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -45,6 +45,36 @@
                 align-items: center;
             }
         </style>
+        <script>
+            document.getElementById("login-form").addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                var username = document.getElementById("username").value;
+                var password = document.getElementById("password").value;
+
+                var data = {
+                    username: username,
+                    password: password,
+                };
+
+                fetch("/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }).then((response) => response.text())
+                .then((text) => {
+                    if(text == "Username or password is incorrect") {
+                        alert(text);
+
+                    } else {
+                        sessionStorage.setItem("token", text);
+                        window.location.href = "/";
+                    }
+                });
+            });
+        </script>
     </body>
 
 </html>
