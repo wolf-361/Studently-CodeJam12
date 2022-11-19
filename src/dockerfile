@@ -5,7 +5,8 @@ WORKDIR /app
 
 # Install app dependencies
 COPY package*.json ./
-RUN yarn install && yarn global add nodemon
+RUN yarn global add mysql express
+RUN yarn global add nodemon
 
 # Bundle app source
 COPY . .
