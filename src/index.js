@@ -6,7 +6,13 @@ const bodyParser = require('body-parser'); //For parsing the post request data
 const register = require('./users/register'); //The register function
 const login = require('./users/login'); //The login function
 
+
 const app = express(); //Instanciate the express app
+app.set('view engine', 'ejs');
+
+app.get('/', (req, res) => {
+    res.render('test');
+});
 
 let database = mysql.createConnection({
     host: 'database',
