@@ -10,18 +10,20 @@
             <%- include('partials/header'); %>
         </header>
         <main role="main" class="container vh-100">
-            <div class="d-flex flex-row justify-content-center p-5 vertical-center h-100 w-100">
-                <div class="border border-secondary rounded justify-content-center p-5 h-100 w-75" style=" background: rgba(255, 255, 255, 0.4)">
+            <div class="d-flex flex-row justify-content-center p-1 vertical-center h-100 w-100">
+                <div class="overflow-auto border border-secondary rounded justify-content-center p-2" style=" background: rgba(255, 255, 255, 0.4); width: 600px; height: 600px; ">
                     <div class="text-center m-5">
                         <h1>My To Do List</h1>
                     </div>
-                    <div class="input-group">
-                        <input class="form-control" type="text" id="input-to-todolist" placeholder="Task...">
+                    <div class="input-group p-3">
+                        <input class="form-control" type="text" id="input-to-todolist" placeholder="Add a task...">
                         <div class="input-group-append">
                             <span class="btn btn-secondary" id="add-to-todolist">Add</span>
                         </div>
                     </div>
-                    <ul id="myUL"></ul>
+                    <div class="p-3"> <!-- Todolist itself-->
+                        <ul id="myUL" class=""></ul>
+                    </div>
                 </div>
             </div>
         </main>
