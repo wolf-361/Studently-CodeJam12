@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <%- include('partials/head'); %>
+    </head>
+
+    <body class="container p-2 d-flex flex-column vh-100">
+        <header>
+            <%- include('partials/header'); %>
+        </header>
+        <main role="main" class="container vh-100">
+            <div class="row justify-content-center p-5">
+                <div class="col-9">
+                    <div class="border border-secondary rounded justify-content-center vertical-center h-100 p-5">
+                        <div class="text-center">
+                            <h1>Calendar</h1>
+                            <!-- valeur temporaire pour calendrier -->
+                            <div class="container border border-primary rounded justify-content-center vertical-center h-100 w-100 p-3">
+                                <!-- Jour de semaine -->
+                                <% var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; %>
+                                <div class="row w-100 p-2">
+                                    <% for(var i = 0; i < days.length - 2; i++) { %>
+                                        <div class="col-2">
+                                            <div class="border border-secondary rounded m-1">
+                                                <h4 class="card-title"><%= days[i] %></h4>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                    <div class="col-2">
+                                        <div class="row">
+                                        <% for(var i = 5; i < days.length;  i++) { %>
+                                            <div class="col-12">
+                                                <div class="border border-secondary rounded m-1">
+                                                    <h4 class="card-title"><%= days[i] %></h4>
+                                                </div>
+                                            </div>
+                                        <% } %>
+                                        </div>
+                                    </div>                                      
+                                </div>
+                                <!--
+                                <div class="row w-100 p-2">
+                                    <div class="col-2 card bg-light mb-3" style="max-width: 20rem;">
+                                        <div class="card-header">1</div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Event exemple</h4>
+                                            <p class="card-text">rhlfb JS dklv ;mSD v SK fvjklD D ;vklmsl;dvknZZDLKJJbvl;dfvdfbfgbgfbd</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 card bg-light mb-3" style="max-width: 20rem;">
+                                        <div class="card-header">2</div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Event exemple</h4>
+                                            <p class="card-text">rhlfb JS dklv ;mSD v SK fvjklD D ;vklmsl;dvknZZDLKJJbvl;dfvdfbfgbgfbd</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 card bg-light mb-3" style="max-width: 20rem;">
+                                        <div class="card-header">3</div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Event exemple</h4>
+                                            <p class="card-text">rhlfb JS dklv ;mSD v SK fvjklD D ;vklmsl;dvknZZDLKJJbvl;dfvdfbfgbgfbd</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 card bg-light mb-3" style="max-width: 20rem;">
+                                        <div class="card-header">4</div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Event exemple</h4>
+                                            <p class="card-text">rhlfb JS dklv ;mSD v SK fvjklD D ;vklmsl;dvknZZDLKJJbvl;dfvdfbfgbgfbd</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 card bg-light mb-3" style="max-width: 20rem;">
+                                        <div class="card-header">5</div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Event exemple</h4>
+                                            <p class="card-text">rhlfb JS dklv ;mSD v SK fvjklD D ;vklmsl;dvknZZDLKJJbvl;dfvdfbfgbgfbd</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="row">
+                                            <div class="col-12 card bg-light mb-3" style="max-width: 20rem;">
+                                                <div class="card-header">6</div>
+                                                <div class="card-body">
+                                                    <h4 class="card-title">Event exemple</h4>
+                                                    <p class="card-text">rhlfb JS dklv ;mSD v SK fvjklD D ;vklmsl;dvknZZDLKJJbvl;dfvdfbfgbgfbd</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 card bg-light mb-3" style="max-width: 20rem;">
+                                                <div class="card-header">7</div>
+                                                <div class="card-body">
+                                                    <h4 class="card-title">Event exemple</h4>
+                                                    <p class="card-text">rhlfb JS dklv ;mSD v SK fvjklD D ;vklmsl;dvknZZDLKJJbvl;dfvdfbfgbgfbd</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                
+                                </div>
+                                -->
+                            </div>
+                        </div>                        
+                    </div>                    
+                </div>
+                <div class="col-3">
+                    <div class="border border-secondary rounded justify-content-center vertical-center p-5 ">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="text-center">
+                                    <h3>New Event</h3>
+                                </div>
+                                <form>
+                                    <div>
+                                        <label for="beginning">Beginning of the event:</label>
+                                        <input type="datetime-local" id="beginning" name="beginning">
+                                    </div>
+                                    <div>
+                                        <label for="ending">End of the event:</label>
+                                        <input type="datetime-local" id="ending" name="ending">
+                                    </div>
+                                    <div>
+                                        <label for="title">Title of the event:</label>
+                                        <input type="text" id="title" name="title">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Add the event</button>
+                                    <button type="reset" class="btn btn-primary">Reset the form</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <%- include('partials/footer'); %>
+        </footer>
+    </body>
+</html>

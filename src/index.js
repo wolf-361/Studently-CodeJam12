@@ -23,15 +23,15 @@ app.get('/todolist', (req, res) => {
     res.render('todolist');
 });
 
-app.get('calendar', (req, res) => {
+app.get('/calendar', (req, res) => {
     res.render('calendar');
 });
 
-app.get('chat', (req, res) => {
+app.get('/chat', (req, res) => {
     res.render('chat');
 });
 
-app.get('meditation', (req, res) => {
+app.get('/meditation', (req, res) => {
     res.render('meditation');
 });
 
