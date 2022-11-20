@@ -93,17 +93,17 @@ app.post('/api/event/delete', (req, res) => {
 
 app.post('/api/todo/add', (req, res) => {
 //When a form is posted at http://localhost:3000/api/todo/add
-    addTodo(req, res, database);
+    addTodo(req, res, database, jwt_secret_key);
 });
 
 app.post('/api/todo/get', (req, res) => {
 //When a form is posted at http://localhost:3000/api/todo/get
-    getTodos(req, res, database);
+    getTodos(req, res, database, jwt_secret_key);
 });
 
 app.post('/api/todo/done', (req, res) => {
 //When a form is posted at http://localhost:3000/api/todo/done
-    markDone(req, res, database);
+    markDone(req, res, database, jwt_secret_key);
 });
 
 app.listen(3000, () => {
