@@ -39,6 +39,11 @@ io.on('connection', (socket) => { //When a new socket connects
 
                 if(user) {
                     io.emit("new-message", {message: data.message, user: user.username, channel: data.channel});
+
+                    database.query("INSERT INTO Message (account, username, text, channel) VALUES (?, ?, ?, ?)", [userId, user.username, data.message, data.channel], (err, result) => {
+                        if(err) throw err;
+                    });
+                    
                 } //Send the message to all the connected sockets
             });
 
@@ -85,6 +90,22 @@ app.get('/login', (req, res) => {
 
 app.get('/audio/:sound', (req, res) => {
     streamMusic(req, res, req.params.sound);
+});
+
+app.get('/chat/get-messages/:channel', (req, res) => {
+    let channel = req.params.channel;
+    let messages = [];
+
+    database.query("SELECT * FROM Message WHERE channel = ?", [channel], (err, result) => {
+        if(err) throw err;
+        if(result.length > 0) {
+            result.forEach((message) => {
+                messages.push(message);
+            });
+        }
+
+        res.json(messages);
+    });
 });
 
 app.post('/api/get-new-background', (req, res) => {

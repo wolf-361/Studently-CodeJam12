@@ -103,7 +103,26 @@
             let currentChannel = sessionStorage.getItem('channel');
             let currentSpan = document.getElementById('currentSpan');
             currentSpan.innerHTML = currentChannel;
+ 
+            function getMessages() {
+                fetch("/chat/get-messages/" + currentChannel, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                }).then((response) => response.json())
+                .then((text) => {
+                   for(i = 0; i < text.length; i++) {
+                    let message = document.createElement("li");
+                    message.innerHTML = "<strong>" + text[i].username + ": </strong>" + text[i].text;
+                    document.getElementById("messages").appendChild(message);
+                   }
+                });
+            }
 
+            getMessages();
+            
+ 
             channels = [
                 "General",
                 "Random",
@@ -129,6 +148,7 @@
                     sessionStorage.setItem('channel',channels[i]);
                     currentChannel = channels[i];
                     currentSpan.innerHTML = currentChannel;
+                    getMessages();
 
                     messages.innerHTML = "";
                 })
