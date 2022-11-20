@@ -9,6 +9,7 @@ const login = require('./users/login'); //The login function
 
 const {newEvent, getEvents, deleteEvent} = require('./events'); //Events related functions
 const {addTodo, getTodos, markDone} = require('./todos'); //Todos related functions
+const { streamMusic } = require('./stream'); //Music streaming related functions
 
 const app = express(); //Instanciate the express app
 
@@ -42,6 +43,10 @@ app.get('/register', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login');
+});
+
+app.get('/audio/:sound', (req, res) => {
+    streamMusic(req, res, req.params.sound);
 });
 
 app.post('/api/get-new-background', (req, res) => {
