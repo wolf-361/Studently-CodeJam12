@@ -33,16 +33,63 @@
                 window.location.href = "/login";
             }
 
-            // Create a "close" button and append it to each list item
-            var myNodelist = document.getElementsByTagName("li");
-            var i;
-            for (i = 0; i < myNodelist.length; i++) {
-                var span = document.createElement("SPAN");
-                var txt = document.createTextNode("\u00D7");
-                span.className = "close";
-                span.appendChild(txt);
-                myNodelist[i].appendChild(span);
-            }
+            let data = {
+                userId: sessionStorage.getItem("token")
+            };
+
+            fetch("/api/todo/get", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            }).then(response => response.text())
+            .then(data => {
+                if(data == "Invalid token") {
+                    window.location.href = "/login";
+
+                } else {
+
+                    if(data == "") {
+                        return;
+                    }
+
+                    let tasks = JSON.parse(data);
+
+                    for(let i = 0; i < tasks.length; i++) {
+                        let li = document.createElement("li");
+                        li.innerText = tasks[i].text;
+                        li.setAttribute("id", tasks[i].id);
+                        li.addEventListener("click", function(event) {
+                            let targetId = event.target.id;
+
+                            let data = {
+                                userId: sessionStorage.getItem("token"),
+                                todoId: targetId
+                            }
+
+                            fetch("/api/todo/done", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify(data)
+                            }).then((response) => response.text())
+                            .then((text) => {
+                                if(text == "Missing parameters") {
+                                    alert(text);
+                                } else if(text == "Invalid token") {
+                                    window.location.href = "/login";
+                                } else {
+                                    li.style.display = "none";
+                                }
+                            });
+                        });
+
+                        document.getElementById("myUL").appendChild(li);
+                    }
+                }
+            });
 
             // Event listeners
             document.getElementById('input-to-todolist').addEventListener('keypress', function (e) {
@@ -57,7 +104,6 @@
 
             // Click on a close button to hide the current list item
             var close = document.getElementsByClassName("close");
-            var i;
             for (i = 0; i < close.length; i++) {
                 close[i].onclick = function () {
                     var div = this.parentElement;
@@ -65,17 +111,9 @@
                 }
             }
 
-            // Add a "checked" symbol when clicking on a list item
-            var list = document.querySelector('ul');
-            list.addEventListener('click', function (ev) {
-                if (ev.target.tagName === 'LI') {
-                    ev.target.classList.toggle('checked');
-                }
-            }, false);
 
             // Create a new list item when clicking on the "Add" button
             function newElement() {
-                
                 var inputValue = document.getElementById("input-to-todolist").value;
 
                 if (inputValue === '') {
@@ -98,31 +136,49 @@
                 .then((text) => {
                     if(text == "Missing parameters") {
                         alert(text);
+                    } else if(text == "Invalid token") {
+                        window.location.href = "/login";
+                    } else {
+                        let taskId = text;
+
+                        var li = document.createElement("li");
+
+                        li.setAttribute("id", taskId);
+                        var t = document.createTextNode(inputValue);
+                        li.appendChild(t);
+
+                        document.getElementById("myUL").appendChild(li);
+                        document.getElementById("input-to-todolist").value = "";
+
+                        li.addEventListener("click", function(event) {
+                            let targetId = event.target.id;
+
+                            let data = {
+                                userId: sessionStorage.getItem("token"),
+                                todoId: targetId
+                            }
+
+                            fetch("/api/todo/done", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify(data)
+                            }).then((response) => response.text())
+                            .then((text) => {
+                                if(text == "Missing parameters") {
+                                    alert(text);
+                                } else if(text == "Invalid token") {
+                                    window.location.href = "/login";
+                                } else {
+                                    li.style.display = "none";
+                                }
+                            });
+                        });
                     }
-                    
-
-                        // var li = document.createElement("li");
-                        // var t = document.createTextNode(inputValue);
-                        // li.appendChild(t);
-                        // document.getElementById("myUL").appendChild(li);
-
                 });
                    
                 }
-                // document.getElementById("input-to-todolist").value = "";
-
-                // var span = document.createElement("SPAN");
-                // var txt = document.createTextNode("\u00D7");
-                // span.className = "close";
-                // span.appendChild(txt);
-                // li.appendChild(span);
-
-                // for (i = 0; i < close.length; i++) {
-                //     close[i].onclick = function () {
-                //         var div = this.parentElement;
-                //         div.style.display = "none";
-                //     }
-                // }
             }
         </script>
     </body>
