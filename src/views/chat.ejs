@@ -87,6 +87,8 @@
         <footer class="footer">
             <%- include('partials/footer'); %>
         </footer>
+        <audio id="dong" src="/audio/dong.mp3">
+        </audio>
         <script src="http://10.217.29.34:3001/socket.io/socket.io.js"></script>
         <script>
             if(sessionStorage.getItem('token') == null){
@@ -97,6 +99,7 @@
                 sessionStorage.setItem('channel', 'General');
             }
 
+            let dong = document.getElementById("dong");
             let currentChannel = sessionStorage.getItem('channel');
             let currentSpan = document.getElementById('currentSpan');
             currentSpan.innerHTML = currentChannel;
@@ -142,6 +145,8 @@
                     let message = document.createElement("li");
                     message.innerHTML = "<strong>" + data.user + ": </strong>" + data.message;
                     document.getElementById("messages").appendChild(message);
+
+                    dong.play();
                 }
             });
 
