@@ -56,7 +56,7 @@
                                             <!-- messages -->
                                             <div class="well">
                                                 <h2>Channel name : <span id="currentSpan"></span></h2>
-                                                <ul id="messages" style="height: 350px">
+                                                <ul id="messages" style="height: 415px; list-style: none;">
 
                                                 </ul>                                               
                                             </div>
@@ -73,9 +73,12 @@
                                 <div class="well">
                                     <div class="border border-secondary rounded p-2 h-30" style=" background: rgba(255, 255, 255, 0.4); margin-top: 10px;">
                                         <!-- text Pour Quentin -->
-                                        <h2 class="text-center">Send a message</h2>
-                                        <input id="message-input" type="text" class="form-control" placeholder="Message">
-                                        <button id="send" type="button" class="btn btn-primary btn-lg btn-block">Send</button>
+                                        <div class="input-group p-2">
+                                            <input id="message-input" type="text" class="form-control" placeholder="Send a message">
+                                            <div class="input-group-append">
+                                                <span id="send" type="button" class="btn btn-primary btn-lg btn-block">Send</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
