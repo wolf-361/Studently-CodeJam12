@@ -1,0 +1,16 @@
+body {
+    margin:0;
+    padding:0;
+}
+div.image {
+    background-position: center center;
+    background-repeat:no-repeat;
+    background-size: cover;
+    position:fixed;
+    z-index:-1;
+    width:100vw;
+    height:100vh;
+}
+p{
+    color:white;
+}
