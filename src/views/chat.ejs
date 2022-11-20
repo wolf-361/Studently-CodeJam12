@@ -87,7 +87,7 @@
         <footer class="footer">
             <%- include('partials/footer'); %>
         </footer>
-        <script src="http://localhost:3001/socket.io/socket.io.js"></script>
+        <script src="http://10.217.29.34:3001/socket.io/socket.io.js"></script>
         <script>
             if(sessionStorage.getItem('token') == null){
                 window.location.href = '/login';
@@ -131,7 +131,7 @@
                 })
             }
 
-            let socket = io("http://localhost:3001");
+            let socket = io("http://10.217.29.34:3001");
 
             socket.on("error", (data) => {
                 alert("Error:" + data);
