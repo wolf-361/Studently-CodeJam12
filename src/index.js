@@ -1,17 +1,55 @@
 const fs = require('fs'); //For reading files
+const http = require('http'); //For creating socket server
 const mysql = require('mysql'); //For database interactions
 const crypto = require('crypto'); //For hashing passwords and all cryptogaphic stuff
-const express = require('express'); //For serving the web app
+const express = require('express'); //For serving the web app$
 const bodyParser = require('body-parser'); //For parsing the post request data
 
 const register = require('./users/register'); //The register function
 const login = require('./users/login'); //The login function
 
+const { checkToken } = require('./auth'); //The checkToken function
 const {newEvent, getEvents, deleteEvent} = require('./events'); //Events related functions
 const {addTodo, getTodos, markDone} = require('./todos'); //Todos related functions
 const { streamMusic } = require('./stream'); //Music streaming related functions
 
 const app = express(); //Instanciate the express app
+
+const httpServer = http.createServer(app); //Creating the http server
+const io = require('socket.io')(httpServer); //For socket server
+
+io.on('connection', (socket) => { //When a new socket connects
+
+    console.log('New socket connected');
+        
+    socket.on("message", (data) => {
+        if(checkToken(data.token, jwt_secret_key)) { //Check if the token is valid
+
+            let userId = checkToken(data.token, jwt_secret_key).id; //Get the user from the token
+            let user;
+
+            database.query("SELECT * FROM Account WHERE id = ?", [userId], (err, result) => { //Get the user from the database
+                if(err) throw err;
+                if(result.length > 0) {
+                    user = result[0];
+
+                } else {
+                    socket.emit("error", {message: "User not found"});
+                }
+
+                if(user) {
+                    io.emit("new-message", {message: data.message, user: user.username, channel: data.channel});
+                } //Send the message to all the connected sockets
+            });
+
+            // io.emit("message", data); //Send the message to all the clients
+        }
+    });
+
+    socket.on("disconnect", () => {
+        console.log("Socket disconnected");
+    });
+});
 
 app.set('view engine', 'ejs');
 app.use(express.static('pictures'));
@@ -141,5 +179,6 @@ app.post('/api/todo/done', (req, res) => {
 });
 
 app.listen(3000, () => {
+    httpServer.listen(3001);
     console.log('Server is running on port 3000');
 });
