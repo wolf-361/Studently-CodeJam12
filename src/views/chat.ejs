@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <%- include('partials/head'); %>
+    </head>
+
+    <body class="container p-2 d-flex flex-column vh-100">
+        <header>
+            <%- include('partials/header'); %>
+        </header>
+        <main role="main" class="container vh-100">
+            <div class="p-2"></div><!-- Spacing -->
+            <!-- TEST -->
+            <div class="align-items-center">
+                <div class="row">
+                    <div class="col-md-4 vh-80">
+                        <div class="well">
+                            <div class="container border border-secondary rounded h-100">
+                                <div class="text-center p-2">
+                                    <h1>Channels</h1>
+                                </div>
+                                <nav class="nav flex-column">
+                                    <!-- TODO sizing -->
+                                    <a class="nav-link mx-auto" href="#">TODO</a>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 vh-80 h-100">
+                        <div class="row">
+                            <div class="col-md-12 mh-50">
+                                <div class="well">
+                                    <div class="border border-secondary rounded p-2 h-70">
+                                        <div class="col-md-12">
+                                            <!-- messages -->
+                                            <div class="well">
+                                                <h2>Channel name : YOLO </h2>
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />                                                
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="well">
+                                                <!-- Pour Quentin -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mh-25">
+                                <div class="well">
+                                    <div class="border border-secondary rounded p-2 h-30">
+                                        <!-- text Pour Quentin -->
+                                        <h2 class="text-center">TODO</h2>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <%- include('partials/footer'); %>
+        </footer>
+        <script>
+            document.getElementById("login-form").addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                var username = document.getElementById("username").value;
+                var password = document.getElementById("password").value;
+
+                var data = {
+                    username: username,
+                    password: password,
+                };
+
+                fetch("/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }).then((response) => response.text())
+                    .then((text) => {
+                        if (text == "Username or password is incorrect") {
+                            alert(text);
+
+                        } else {
+                            sessionStorage.setItem("token", text);
+                            window.location.href = "/";
+                        }
+                    });
+            });
+        </script>
+    </body>
+
+</html>
