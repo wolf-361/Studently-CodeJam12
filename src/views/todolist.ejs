@@ -29,8 +29,12 @@
             <%- include('partials/footer'); %>
         </footer>
         <script>
+            if(sessionStorage.getItem("token") === null) {
+                window.location.href = "/login";
+            }
+
             // Create a "close" button and append it to each list item
-            var myNodelist = document.getElementsByTagName("LI");
+            var myNodelist = document.getElementsByTagName("li");
             var i;
             for (i = 0; i < myNodelist.length; i++) {
                 var span = document.createElement("SPAN");
@@ -71,29 +75,54 @@
 
             // Create a new list item when clicking on the "Add" button
             function newElement() {
-                var li = document.createElement("li");
+                
                 var inputValue = document.getElementById("input-to-todolist").value;
-                var t = document.createTextNode(inputValue);
-                li.appendChild(t);
+
                 if (inputValue === '') {
                     alert("You must write something!");
+
                 } else {
-                    document.getElementById("myUL").appendChild(li);
-                }
-                document.getElementById("input-to-todolist").value = "";
 
-                var span = document.createElement("SPAN");
-                var txt = document.createTextNode("\u00D7");
-                span.className = "close";
-                span.appendChild(txt);
-                li.appendChild(span);
-
-                for (i = 0; i < close.length; i++) {
-                    close[i].onclick = function () {
-                        var div = this.parentElement;
-                        div.style.display = "none";
+                    let data = {
+                        userId: sessionStorage.getItem("token"),
+                        text: inputValue
                     }
+
+                    fetch("/api/todo/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }).then((response) => response.text())
+                .then((text) => {
+                    if(text == "Missing parameters") {
+                        alert(text);
+                    }
+                    
+
+                        // var li = document.createElement("li");
+                        // var t = document.createTextNode(inputValue);
+                        // li.appendChild(t);
+                        // document.getElementById("myUL").appendChild(li);
+
+                });
+                   
                 }
+                // document.getElementById("input-to-todolist").value = "";
+
+                // var span = document.createElement("SPAN");
+                // var txt = document.createTextNode("\u00D7");
+                // span.className = "close";
+                // span.appendChild(txt);
+                // li.appendChild(span);
+
+                // for (i = 0; i < close.length; i++) {
+                //     close[i].onclick = function () {
+                //         var div = this.parentElement;
+                //         div.style.display = "none";
+                //     }
+                // }
             }
         </script>
     </body>
