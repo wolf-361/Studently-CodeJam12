@@ -15,6 +15,7 @@ const app = express(); //Instanciate the express app
 
 app.set('view engine', 'ejs');
 app.use(express.static('pictures'));
+app.use(express.static('gif'));
 app.use(bodyParser.json({ extended: true }));
 //Allow to parse json sended from the frontend
 

@@ -11,23 +11,28 @@
         </header>
         <main role="main" class="container vh-100">
             <audio id="audio" src=""></audio>
-                <div class="border border-secondary rounded justify-content-center p-3 h-50 w-50" style=" background: rgba(255, 255, 255, 0.4)">
-                    <div class="text-center">
-                        <h1>Meditation</h1>
-                    </div>
-                    <div id="animation-container">
-
-                    </div>
-                    <br><br>
-                    <div id="button">
-                        <button type="button" id="previous" class="btn btn-primary">Previous sound</button>
-                        <button type="button" id="play" class="btn btn-primary">Play</button>
-                        <button type="button" id="pause" class="btn btn-primary">Pause</button>
-                        <button type="button" id="next" class="btn btn-primary">Next sound</button>
-                        <br> <br>
-                        <span id="currentSound"></span>
+            <div class="d-flex flex-row align-items-center justify-content-center p-2 vertical-center w-100">
+                <div class="well mx-auto" style="width: 500px; height: 500px;">
+                    <div class="text-center border border-secondary rounded align-items-center justify-content-center p-3 mx-auto vh-auto"
+                        style=" background: rgba(255, 255, 255, 0.4);">
+                        <div class="p-2">
+                            <h1>Meditation</h1>
+                        </div>
+                        <div class="mx-auto p-2">
+                            <img class="rounded" src="/meditationgiffinal.gif" alt="Meditation even on fire" width="350" height="350" />
+                        </div>
+                        <br>
+                        <div id="button" class="p-2">
+                            <button type="button" id="previous" class="btn btn-primary">Previous sound</button>
+                            <button type="button" id="play" class="btn btn-primary">Play</button>
+                            <button type="button" id="pause" class="btn btn-primary">Pause</button>
+                            <button type="button" id="next" class="btn btn-primary">Next sound</button>
+                            <br><br>
+                            <span class="text-danger" id="currentSound"></span>
+                        </div>
                     </div>
                 </div>
+            </div>
         </main>
         <footer class="footer">
             <%- include('partials/footer'); %>
@@ -37,7 +42,7 @@
             let audio = document.getElementById("audio");
             let sounds = ["rain", "relief", "city", "sea"];
 
-            if(localStorage.getItem('meditation-sound') === null) {
+            if (localStorage.getItem('meditation-sound') === null) {
                 localStorage.setItem('meditation-sound', 'rain');
             }
 
@@ -45,7 +50,7 @@
             document.getElementById("currentSound").innerHTML = "Current sound : " + currentSound;
 
             audio.src = "/audio/" + currentSound + ".mp3";
-            
+
             document.getElementById("play").addEventListener("click", () => {
                 audio.play();
             });
@@ -56,7 +61,7 @@
 
             document.getElementById("next").addEventListener("click", () => {
                 let index = sounds.indexOf(currentSound);
-                if(index < sounds.length - 1) {
+                if (index < sounds.length - 1) {
                     currentSound = sounds[index + 1];
                 } else {
                     currentSound = sounds[0];
@@ -69,7 +74,7 @@
 
             document.getElementById("previous").addEventListener("click", () => {
                 let index = sounds.indexOf(currentSound);
-                if(index > 0) {
+                if (index > 0) {
                     currentSound = sounds[index - 1];
                 } else {
                     currentSound = sounds[sounds.length - 1];
@@ -89,4 +94,5 @@
             }
         </style>
     </body>
+
 </html>
