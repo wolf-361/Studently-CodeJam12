@@ -55,10 +55,12 @@
                     body: JSON.stringify(data)
                 }).then((response) => response.text())
                 .then((text) => {
-                    if(text == "Username or password is incorrect") {
+
+                    if(text == "Username or password incorrect") {
                         alert(text);
 
                     } else {
+                        sessionStorage.setItem("username", username);
                         sessionStorage.setItem("token", text);
                         window.location.href = "/";
                     }
