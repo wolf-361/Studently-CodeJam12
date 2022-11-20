@@ -46,9 +46,6 @@ app.get('/login', (req, res) => {
 
 app.post('/api/get-new-background', (req, res) => {
     
-
-    console.log(req.body);
-
     let background;
     let newBackground;
 
@@ -56,6 +53,10 @@ app.post('/api/get-new-background', (req, res) => {
         background = req.body.background;
 
     } catch (error) {
+        background = "montreal-night-1.avif";
+    }
+
+    if(background == null) {
         background = "montreal-night-1.avif";
     }
 
@@ -71,6 +72,8 @@ app.post('/api/get-new-background', (req, res) => {
             }
         }
     }
+
+    console.log(newBackground);
 
     res.status(200).send(newBackground);
 });

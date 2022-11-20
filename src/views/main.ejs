@@ -11,7 +11,7 @@
         </header>
         <main role="main" class="container vh-100">
             <div class="d-flex flex-row justify-content-center p-5 vertical-center">
-                <div class="justify-content-center p-2" style="font-weight:bold; font-size: 128px;">
+                <div class="justify-content-center p-1" style="font-weight:bold; font-size: 128px; font-family: 'Courier New', Courier, monospace; margin-top: -20px;">
                     <div id="MyClockDisplay" class="clock" onload="showTime()">
                         <script>
                             function showTime() {
@@ -32,7 +32,8 @@
 
                                 h = (h < 10) ? "0" + h : h; m = (m < 10) ? "0" + m : m; s = (s < 10) ? "0" + s : s; var time = h + ":" + m
                                     + ":" + s + " " + session; document.getElementById("MyClockDisplay").innerText = time;
-                                document.getElementById("MyClockDisplay").textContent = time; setTimeout(showTime, 1000);
+                                document.getElementById("MyClockDisplay").textContent = time;
+                                setTimeout(showTime, 1000);
                             }
                             showTime();
                         </script>
