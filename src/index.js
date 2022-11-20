@@ -1,3 +1,4 @@
+const fs = require('fs'); //For reading files
 const mysql = require('mysql'); //For database interactions
 const crypto = require('crypto'); //For hashing passwords and all cryptogaphic stuff
 const express = require('express'); //For serving the web app
@@ -10,7 +11,11 @@ const {newEvent, getEvents, deleteEvent} = require('./events'); //Events related
 const {addTodo, getTodos, markDone} = require('./todos'); //Todos related functions
 
 const app = express(); //Instanciate the express app
+
 app.set('view engine', 'ejs');
+app.use(express.static('pictures'));
+app.use(bodyParser.json({ extended: true }));
+//Allow to parse json sended from the frontend
 
 let jwt_secret_key = "dxN3ucxNFmaPkTLdaH6GmFjip5#&X@1E8nRox*7DFHqIN%G#$b3V#osnBMwpi&s7oa9n3RfU#YWbTBmopl@V74ujhjt2Qvl9u8Mg&QAhQ3#s9dyauYjmtdFdOwmFa1bcX#*s3rvh19yFtW6xkeUe2X"
 
@@ -43,6 +48,39 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
+app.post('/api/get-new-background', (req, res) => {
+    
+
+    console.log(req.body);
+
+    let background;
+    let newBackground;
+
+    try {
+        background = req.body.background;
+
+    } catch (error) {
+        console.log(error);
+        res.status(400).send("Bad request");
+        return;
+    }
+
+    let files = fs.readdirSync('pictures');
+
+    for(let i = 0; i < files.length; i++) {
+        if(files[i] === background) {
+            if(i + 1 == files.length) {
+                newBackground = files[0];
+    
+            } else {
+                newBackground = files[i + 1];
+            }
+        }
+    }
+
+    res.status(200).send(newBackground);
+});
+
 let database = mysql.createConnection({
     host: 'database',
     user: 'codejam',
@@ -61,10 +99,6 @@ database.connect(function (err) {
 
     console.log('Connected to the database.');
 });
-
-app.use(bodyParser.json({ extended: true }));
-//Allow to parse json sended from the frontend
-
 
 app.post('/api/register', (req, res) => {
 //When a form is posted at http://localhost:3000/api/register

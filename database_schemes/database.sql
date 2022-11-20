@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS Account (
     username VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
+    background VARCHAR(255) NOT NULL DEFAULT 'montreal-night-1.avif',
     PRIMARY KEY (id)
 );
 
