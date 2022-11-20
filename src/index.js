@@ -78,8 +78,6 @@ app.post('/api/get-new-background', (req, res) => {
         }
     }
 
-    console.log(newBackground);
-
     res.status(200).send(newBackground);
 });
 
