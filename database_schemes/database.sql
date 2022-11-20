@@ -25,3 +25,13 @@ CREATE TABLE IF NOT EXISTS Event (
     PRIMARY KEY (id),
     FOREIGN KEY (account) REFERENCES Account(id)
 );
+
+CREATE TABLE IF NOT EXISTS Message (
+    id INT NOT NULL AUTO_INCREMENT,
+    account INT NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    text VARCHAR(255) NOT NULL,
+    channel VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (account) REFERENCES Account(id)
+);

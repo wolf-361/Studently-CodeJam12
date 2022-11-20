@@ -20,9 +20,9 @@
                                 <div class="text-center p-2">
                                     <h1>Channels</h1>
                                 </div>
-                                <nav class="nav flex-column">
+                                <nav id="channels" class="nav flex-column">
                                     <!-- TODO sizing -->
-                                    <a class="nav-link mx-auto" href="#">TODO</a>
+                                    <a class="nav-link mx-auto" href="#"></a>
                                     <br />
                                     <br />
                                     <br />
@@ -55,21 +55,10 @@
                                         <div class="col-md-12">
                                             <!-- messages -->
                                             <div class="well">
-                                                <h2>Channel name : YOLO </h2>
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />                                                
+                                                <h2>Channel name : <span id="currentSpan"></span></h2>
+                                                <ul id="messages" style="height: 350px">
+
+                                                </ul>                                               
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -82,13 +71,11 @@
                             </div>
                             <div class="col-md-12 mh-25">
                                 <div class="well">
-                                    <div class="border border-secondary rounded p-2 h-30" style=" background: rgba(255, 255, 255, 0.4)">
+                                    <div class="border border-secondary rounded p-2 h-30" style=" background: rgba(255, 255, 255, 0.4); margin-top: 10px;">
                                         <!-- text Pour Quentin -->
-                                        <h2 class="text-center">TODO</h2>
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />                    
+                                        <h2 class="text-center">Send a message</h2>
+                                        <input id="message-input" type="text" class="form-control" placeholder="Message">
+                                        <button id="send" type="button" class="btn btn-primary btn-lg btn-block">Send</button>
                                     </div>
                                 </div>
                             </div>
@@ -100,35 +87,111 @@
         <footer class="footer">
             <%- include('partials/footer'); %>
         </footer>
+        <audio id="dong" src="/audio/dong.mp3">
+        </audio>
+        <script src="http://10.217.29.34:3001/socket.io/socket.io.js"></script>
         <script>
-            document.getElementById("login-form").addEventListener("submit", function (event) {
-                event.preventDefault();
+            if(sessionStorage.getItem('token') == null){
+                window.location.href = '/login';
+            }
 
-                var username = document.getElementById("username").value;
-                var password = document.getElementById("password").value;
+            if(sessionStorage.getItem('channel') == null){
+                sessionStorage.setItem('channel', 'General');
+            }
 
-                var data = {
-                    username: username,
-                    password: password,
-                };
-
-                fetch("/api/login", {
-                    method: "POST",
+            let dong = document.getElementById("dong");
+            let currentChannel = sessionStorage.getItem('channel');
+            let currentSpan = document.getElementById('currentSpan');
+            currentSpan.innerHTML = currentChannel;
+ 
+            function getMessages() {
+                fetch("/chat/get-messages/" + currentChannel, {
+                    method: "GET",
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify(data)
-                }).then((response) => response.text())
-                    .then((text) => {
-                        if (text == "Username or password is incorrect") {
-                            alert(text);
+                }).then((response) => response.json())
+                .then((text) => {
+                   for(i = 0; i < text.length; i++) {
+                    let message = document.createElement("li");
+                    message.innerHTML = "<strong>" + text[i].username + ": </strong>" + text[i].text;
+                    document.getElementById("messages").appendChild(message);
+                   }
+                });
+            }
 
-                        } else {
-                            sessionStorage.setItem("token", text);
-                            window.location.href = "/";
-                        }
-                    });
+            getMessages();
+            
+ 
+            channels = [
+                "General",
+                "Random",
+                "Programming",
+                "Networking",
+                "Chemistry",
+                "Mathematics",
+                "Physics",
+                "Biology",
+                "Geography",
+                "History",
+                "Economics",
+                "Philosophy",
+                "Psychology",
+            ]
+
+            document.getElementById("channels").innerHTML = channels.map(channel => `<a id='${channel}'class="nav-link mx-auto">${channel}</a>`).join("")
+
+
+            const nodes = [];
+            for(let i = 0; i < channels.length; i++){
+                document.getElementById(channels[i]).addEventListener("click", function(){
+                    sessionStorage.setItem('channel',channels[i]);
+                    currentChannel = channels[i];
+                    currentSpan.innerHTML = currentChannel;
+                    getMessages();
+
+                    messages.innerHTML = "";
+                })
+            }
+
+            let socket = io("http://10.217.29.34:3001");
+
+            socket.on("error", (data) => {
+                alert("Error:" + data);
             });
+
+            socket.on("new-message", (data) => {
+                if(data.channel == currentChannel){
+                    let message = document.createElement("li");
+                    message.innerHTML = "<strong>" + data.user + ": </strong>" + data.message;
+                    document.getElementById("messages").appendChild(message);
+
+                    dong.play();
+                }
+            });
+
+            function send() {
+
+                let message = document.getElementById("message-input").value;
+
+                if(message != ""){
+                    socket.emit("message", {
+                        message: message,
+                        channel: currentChannel,
+                        token: sessionStorage.getItem('token')
+                    });
+                }
+
+                document.getElementById("message-input").value = "";
+            }
+
+            document.getElementById("message-input").addEventListener("keypress", (event) => {
+                if (event.key == "Enter") {
+                    send();
+                }
+            });
+            document.getElementById("send").addEventListener("click", send);
+
         </script>
     </body>
 
