@@ -60,9 +60,7 @@ app.post('/api/get-new-background', (req, res) => {
         background = req.body.background;
 
     } catch (error) {
-        console.log(error);
-        res.status(400).send("Bad request");
-        return;
+        background = "montreal-night-1.avif";
     }
 
     let files = fs.readdirSync('pictures');
