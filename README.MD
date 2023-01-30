@@ -1,4 +1,12 @@
-# CodeJam 12
+# Studently
+
+A web application developed in 36 hours during the "Codejam" hackathon organized by McGill University. The goal is to help students with organization, mental health and mutual aid between peers.
+
+## Features
+
+ * Todolist
+ * Chat by university subjects (Socket IO)
+ * Relaxation sounds (Streaming via HTTP)
 
 ## How to run the project ?
 
